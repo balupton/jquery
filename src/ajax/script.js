@@ -51,6 +51,12 @@ jQuery.ajaxTransport( "script", function(s) {
 				script.src = s.url;
 
 				// Attach handlers for all browsers
+				script.onerror = function(){
+					// Trigger the error callback
+					if ( s.error ) {
+						s.error(null,'error',null);
+					}
+				};
 				script.onload = script.onreadystatechange = function( _, isAbort ) {
 
 					if ( isAbort || !script.readyState || /loaded|complete/.test( script.readyState ) ) {
